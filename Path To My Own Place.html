@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Freedom Blueprint</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        /* NEW: Animated Glowing Pulse for your main goal */
+        h1 {
+            color: #00ffcc;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5), 0 0 20px rgba(0, 255, 204, 0.3);
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from {
+                text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+            }
+
+            to {
+                text-shadow: 0 0 20px rgba(0, 255, 204, 0.8), 0 0 30px rgba(0, 255, 204, 0.4);
+            }
+        }
+
+        /* CSS Grid Layout: Arranges lists into clean layout cards side-by-side */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+            /* Makes card animations smooth */
+        }
+
+        /* NEW: Card Glow Animation on Hover */
+        .card:hover {
+            border-color: #00ffcc;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+            transform: translateY(-3px);
+            /* Slightly lifts the card up */
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #00ffcc;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Styles the Add Item Button */
+        input[type="submit"] {
+            background-color: #00ffcc;
+            color: #121212;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* Button Hover State */
+        input[type="submit"]:hover {
+            background-color: #ffffff;
+            box-shadow: 0 0 15px #00ffcc;
+            /* Adds a bright neon glow */
+        }
+
+        /* Styles the Text Input Field */
+        input[type="text"] {
+            background-color: #1e1e1e;
+            color: white;
+            border: 1px solid #333;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* NEW: Enhances text input fields when you click inside them */
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #00ffcc;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+            transition: all 0.3s ease;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Target: My New Apartment</h1>
+    <p>This webpage tracks the setup for my future independent living space.</p>
+
+    <!-- The Dashboard Wrapper -->
+    <div class="dashboard">
+
+        <div class="card">
+            <h2>Bedroom Layout</h2>
+            <ul>
+                <li>Queen size bed</li>
+                <li>Custom bookshelf</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Office & Lab Setup</h2>
+            <ul>
+                <li>High-end workstation</li>
+                <li>Dual-monitor layout</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>IT Career Milestones</h2>
+            <ol id="milestone-list">
+                <!-- Added Professor Messer's channel link directly into your milestone bullet point -->
+                <li>Study Core 1 & 2 via <a href="https://youtube.com" target="_blank">Professor Messer's YouTube
+                        Channel</a></li>
+                <li>Build an active directory home lab</li>
+                <li>Land first IT Help Desk role</li>
+            </ol>
+        </div>
+
+    </div>
+
+    <h2>Add To Your Blueprint</h2>
+    <!-- The Form element -->
+    <form id="goal-form">
+        <label for="new-item">Next Apartment Goal:</label>
+        <input type="text" id="new-item" placeholder="e.g., Ergonomic Chair..." required>
+        <input type="submit" value="Add Item">
+    </form>
+
+    <!-- JavaScript block: Adds real-time interactivity -->
+    <script>
+        document.getElementById('goal-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Stops the page from refreshing when clicking submit
+
+            let inputField = document.getElementById('new-item');
+            let newItemText = inputField.value; // Grabs what you typed
+
+            if (newItemText.trim() !== "") {
+                let newLi = document.createElement('li'); // Creates a brand new <li> tag
+                newL"?i.textContent = newItemText;          // Sets the text inside it
+
+                // Targets the milestone list and injects your new item live into the browser!
+                document.getElementById('milestone-list').appendChild(newLi);
+
+                inputField.value = ""; // Clears the input box so you can type another goal
+            }
+        });
+    </script>
+
+</body>
+
+</html>
