@@ -11,7 +11,6 @@
             padding: 20px;
         }
 
-        /* NEW: Animated Glowing Pulse for your main goal */
         h1 {
             color: #00ffcc;
             text-shadow: 0 0 10px rgba(0, 255, 204, 0.5), 0 0 20px rgba(0, 255, 204, 0.3);
@@ -28,7 +27,6 @@
             }
         }
 
-        /* CSS Grid Layout: Arranges lists into clean layout cards side-by-side */
         .dashboard {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -42,15 +40,41 @@
             border-radius: 8px;
             border: 1px solid #333;
             transition: all 0.3s ease;
-            /* Makes card animations smooth */
         }
 
-        /* NEW: Card Glow Animation on Hover */
         .card:hover {
             border-color: #00ffcc;
             box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
             transform: translateY(-3px);
-            /* Slightly lifts the card up */
+        }
+
+        /* NEW: Flashcard Box Styling */
+        .flashcard-container {
+            background-color: #1e1e1e;
+            border: 2px dashed #00ffcc;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .flashcard-container:hover {
+            background-color: #252525;
+        }
+
+        #flashcard-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #00ffcc;
+        }
+
+        .hint-text {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 10px;
         }
 
         ul,
@@ -72,7 +96,6 @@
             text-decoration: underline;
         }
 
-        /* Styles the Add Item Button */
         input[type="submit"] {
             background-color: #00ffcc;
             color: #121212;
@@ -84,14 +107,11 @@
             transition: all 0.3s ease;
         }
 
-        /* Button Hover State */
         input[type="submit"]:hover {
             background-color: #ffffff;
             box-shadow: 0 0 15px #00ffcc;
-            /* Adds a bright neon glow */
         }
 
-        /* Styles the Text Input Field */
         input[type="text"] {
             background-color: #1e1e1e;
             color: white;
@@ -100,15 +120,12 @@
             border-radius: 5px;
         }
 
-        /* NEW: Enhances text input fields when you click inside them */
         input[type="text"]:focus {
             outline: none;
             border-color: #00ffcc;
             box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
-            transition: all 0.3s ease;
         }
     </style>
-
 </head>
 
 <body>
@@ -116,9 +133,14 @@
     <h1>Target: My New Apartment</h1>
     <p>This webpage tracks the setup for my future independent living space.</p>
 
-    <!-- The Dashboard Wrapper -->
-    <div class="dashboard">
+    <!-- NEW: Interactive Study Flashcard Widget -->
+    <h2>A+ Study Flashcard</h2>
+    <div class="flashcard-container" id="study-card">
+        <div id="flashcard-text">Loading card...</div>
+        <div class="hint-text">(Click anywhere on the card to flip it!)</div>
+    </div>
 
+    <div class="dashboard">
         <div class="card">
             <h2>Bedroom Layout</h2>
             <ul>
@@ -138,43 +160,73 @@
         <div class="card">
             <h2>IT Career Milestones</h2>
             <ol id="milestone-list">
-                <!-- Added Professor Messer's channel link directly into your milestone bullet point -->
                 <li>Study Core 1 & 2 via <a href="https://youtube.com" target="_blank">Professor Messer's YouTube
                         Channel</a></li>
                 <li>Build an active directory home lab</li>
                 <li>Land first IT Help Desk role</li>
             </ol>
         </div>
-
     </div>
 
     <h2>Add To Your Blueprint</h2>
-    <!-- The Form element -->
     <form id="goal-form">
         <label for="new-item">Next Apartment Goal:</label>
         <input type="text" id="new-item" placeholder="e.g., Ergonomic Chair..." required>
         <input type="submit" value="Add Item">
     </form>
 
-    <!-- JavaScript block: Adds real-time interactivity -->
     <script>
-        document.getElementById('goal-form').addEventListener('submit', function (event) {
-            event.preventDefault(); // Stops the page from refreshing when clicking submit
+        // Array of flashcard objects (Term and Definition)
+        const flashcards = [
+            { question: "What laptop form factor memory module is smaller than a desktop DIMM?", answer: "SO-DIMM" },
+            { question: "What slot is used inside laptops for wireless, Bluetooth, or cellular cards?", answer: "Mini PCIe" },
+            { question: "What high-speed, non-volatile storage standard replaced older hard drives via an M.2 connection?", answer: "SSD (Solid State Drive)" }
+        ];
 
+        let currentCardIndex = 0;
+        let showingQuestion = true;
+        const cardContainer = document.getElementById('study-card');
+        const cardText = document.getElementById('flashcard-text');
+
+        // Initial setup function to print the first card question
+        function displayCard() {
+            if (showingQuestion) {
+                cardText.textContent = "QUESTION: " + flashcards[currentCardIndex].question;
+                cardText.style.color = "#00ffcc";
+            } else {
+                cardText.textContent = "ANSWER: " + flashcards[currentCardIndex].answer;
+                cardText.style.color = "#ffffff";
+            }
+        }
+
+        // Click Event: Flips card or moves to the next one
+        cardContainer.addEventListener('click', function () {
+            if (showingQuestion) {
+                showingQuestion = false; // Show the answer
+            } else {
+                showingQuestion = true;  // Reset for next question
+                currentCardIndex = (currentCardIndex + 1) % flashcards.length; // Loop back to start
+            }
+            displayCard();
+        });
+
+        // Initialize the app display
+        displayCard();
+
+        // Goal Form Handler
+        document.getElementById('goal-form').addEventListener('submit', function (event) {
+            event.preventDefault();
             let inputField = document.getElementById('new-item');
-            let newItemText = inputField.value; // Grabs what you typed
+            let newItemText = inputField.value;
 
             if (newItemText.trim() !== "") {
-                let newLi = document.createElement('li'); // Creates a brand new <li> tag
-                newLi"i.textContent = newItemText;          // Sets the text inside it 
-                // Targets the milestone list and injects your new item live into the browser!
+                let newLi = document.createElement('li');
+                newLi.textContent = newItemText;
                 document.getElementById('milestone-list').appendChild(newLi);
-
-                inputField.value = ""; // Clears the input box so you can type another goal
+                inputField.value = "";
             }
         });
     </script>
-
 </body>
 
 </html>
